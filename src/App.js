@@ -264,7 +264,7 @@ const titlesAreSame = (moviesList, nominationList) => {
   }
 };
 
-// unnominates movies
+//unnominates movie
 const restoreNominationStatus = (moviesList, nominationList) => {
   for (let nomination in nominationList) {
     for (let Title in moviesList) {

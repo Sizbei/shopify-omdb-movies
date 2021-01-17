@@ -14,7 +14,7 @@ class Nominations extends Component {
       <Button
         label="Remove"
         type="submit"
-        onClick={this.props.removeNomination}
+        onClick={(e) => this.props.removeNomination(e, Nomination)}
         className="btn delete"
         iconClass="fas fa-trash-alt"
       />
@@ -24,5 +24,6 @@ class Nominations extends Component {
     return <div className={`nomination-container`}>{NominationList}</div>;
   }
 }
+
 
 export default Nominations;
