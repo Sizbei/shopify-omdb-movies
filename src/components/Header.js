@@ -1,4 +1,6 @@
 import React from "react";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Navbar,
   NavbarToggler,
@@ -6,16 +8,18 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   FormInput,
   Collapse
 } from "shards-react";
-import "../styling/Header.css";
 
-
-export default class Header extends React.Component {
+export default class NavExample extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +32,14 @@ export default class Header extends React.Component {
     };
   }
 
-  
+  toggleDropdown() {
+    this.setState({
+      ...this.state,
+      ...{
+        dropdownOpen: !this.state.dropdownOpen
+      }
+    });
+  }
 
   toggleNavbar() {
     this.setState({
@@ -42,36 +53,47 @@ export default class Header extends React.Component {
   render() {
     return (
       <Navbar type="dark" theme="primary" expand="md">
-        <div className= "right-comp">
-          
-        <NavbarBrand href="#">Shoppies</NavbarBrand>
+        <NavbarBrand href="#">Shards React</NavbarBrand>
         <NavbarToggler onClick={this.toggleNavbar} />
-        </div>
 
         <Collapse open={this.state.collapseOpen} navbar>
-          
           <Nav navbar>
             <NavItem>
-            <NavLink active href="#">
-            Movie Awards For Entrepreneurs
+              <NavLink active href="#">
+                Active
               </NavLink>
-              
             </NavItem>
-           
+            <NavItem>
+              <NavLink href="#" disabled>
+                Disabled
+              </NavLink>
+            </NavItem>
+            <Dropdown
+              open={this.state.dropdownOpen}
+              toggle={this.toggleDropdown}
+            >
+              <DropdownToggle nav caret>
+                Dropdown
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>Action</DropdownItem>
+                <DropdownItem>Another action</DropdownItem>
+                <DropdownItem>Something else here</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </Nav>
-          
-          
-        </Collapse>
-        <Nav navbar className="ml-auto">
+
+          <Nav navbar className="ml-auto">
             <InputGroup size="sm" seamless>
               <InputGroupAddon type="prepend">
                 <InputGroupText>
-                  
+                  <FontAwesomeIcon icon={faSearch} />
                 </InputGroupText>
               </InputGroupAddon>
               <FormInput className="border-0" placeholder="Search..." />
             </InputGroup>
           </Nav>
+        </Collapse>
       </Navbar>
     );
   }
