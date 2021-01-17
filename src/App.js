@@ -251,4 +251,35 @@ class App extends React.Component {
   }
 }
 
+// checks for dupes
+const titlesAreSame = (moviesList, nominationList) => {
+  const Nominations = nominationList;
+  for (let nominated in Nominations) {
+    for (let Title in moviesList) {
+      if (moviesList[Title].Title === Nominations[nominated].Title) {
+        moviesList[Title].nominated = true;
+        moviesList[Title].label = "Nominated";
+      }
+    }
+  }
+};
+
+// unnominates movies
+const restoreNominationStatus = (moviesList, nominationList) => {
+  for (let nomination in nominationList) {
+    for (let Title in moviesList) {
+      if (moviesList[Title].label === "Nominated") {
+        continue;
+      } else if (
+        moviesList[Title].label === "Nominate" ||
+        moviesList[Title].label === "Can't Nominate"
+      ) {
+        moviesList[Title].nominated = false;
+        moviesList[Title].label = "Nominate";
+      }
+    }
+  }
+  return moviesList;
+};
+
 export default App;
