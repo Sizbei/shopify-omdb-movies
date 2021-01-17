@@ -1,18 +1,15 @@
 import Header from './components/Header.js';
 import Modal from './components/Modal.js';
 
-import './App.css';
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import React from "react";
 import { Tabs, TabList, TabPanel, Tab } from "react-tabs";
 import "./App.css";
-import MovieList from "./Movie-List/MovieList";
-import SearchBar from "./Search-Bar/SearchBar";
-import NominationList from "./Nomination-List/NominationList";
-import Loader from "../utilities/loaders/loaders";
+import Display from "./components/Display";
+import Search from "./components/Search";
+import Nominations from "./components/Nominations";
+import { ClipLoader } from "react-spinners";
 
 class App extends React.Component {
   constructor(props) {
@@ -36,20 +33,20 @@ class App extends React.Component {
       e.preventDefault();
 
       this.setState({
-        searchIcon: <Loader />,
+        searchIcon: < ClipLoader loading size={16} color="#fff" />,
         selectedIndex: 0,
       });
 
       const MoviesList = await this.getMoviesFromOMDB();
 
-      //Remove loader in search bar if response is true.
+      
       if (MoviesList.length) {
         this.setState({
           searchIcon: <i className="fa fa-search"></i>,
         });
       }
 
-      //Give each result a nomination status of false
+      
       MoviesList.forEach(function (movie) {
         movie.nominated = false;
         movie.label = "Nominate";
@@ -203,12 +200,12 @@ class App extends React.Component {
               <div className="circle xxlarge shade1"></div>
               <div className="circle xlarge shade2"></div>
             </div>
-            <SearchBar
+            <Search
               value={this.state.searchQuery}
               onSubmit={(e) => this.handleSearchSubmit(e)}
               onChange={(e) => this.setState({ searchQuery: e.target.value })}
               searchIcon={this.state.searchIcon}
-            ></SearchBar>
+            ></Search>
           </div>
         </header>
 
@@ -236,13 +233,13 @@ class App extends React.Component {
           </TabList>
           <main className="main-container">
             <TabPanel>
-              <MovieList
+              <Display
                 Movies={this.state.Movies}
                 onNominate={this.handleNomination}
               />
             </TabPanel>
             <TabPanel>
-              <NominationList
+              <Nominations
                 Nominations={this.state.Nominations}
                 removeNomination={this.removeNomination}
               />
@@ -253,3 +250,5 @@ class App extends React.Component {
     );
   }
 }
+
+export default App;

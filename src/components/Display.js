@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./MovieList.css";
+import "../styling/Display.css";
 import DisplayItem from "./DisplayItem";
 
 
