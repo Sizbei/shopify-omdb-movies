@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Button from "./Buttons.js";
+import Buttone from "./Buttons.js";
 
 class Nominations extends Component {
   render() {
@@ -11,7 +11,7 @@ class Nominations extends Component {
         <p>{Nomination.Year}</p>
       </div>
 
-      <Button
+      <Buttone
         label="Remove"
         type="submit"
         onClick={(e) => this.props.removeNomination(e, Nomination)}

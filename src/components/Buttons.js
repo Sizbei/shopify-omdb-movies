@@ -1,9 +1,9 @@
 import React from "react";
+import { Button } from "shards-react";
 
-
-function Button({ type, className, onClick, disabled, iconClass, label }) {
+function Buttone({ type, className, onClick, disabled, iconClass, label }) {
   return (
-    <button
+    <Button
       type={type}
       className={className}
       onClick={onClick}
@@ -11,8 +11,8 @@ function Button({ type, className, onClick, disabled, iconClass, label }) {
     >
       <i className={iconClass}></i>
       <span>{label}</span>
-    </button>
+    </Button>
   );
 }
 
-export default Button;
+export default Buttone;

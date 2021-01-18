@@ -9,7 +9,7 @@ import "./App.css";
 import Display from "./components/Display";
 import Search from "./components/Search";
 import Nominations from "./components/Nominations";
-import { ClipLoader } from "react-spinners";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class App extends React.Component {
       searchQuery: "",
       Movies: [],
       Nominations: [],
-      searchIcon: <i className="fa fa-search"></i>,
+     
     };
     this.tabIndex = React.createRef();
   }
@@ -32,50 +32,54 @@ class App extends React.Component {
     this.handleSearchSubmit = async (e) => {
       e.preventDefault();
 
-      this.setState({
-        searchIcon: < ClipLoader loading size={16} color="#fff" />,
-        selectedIndex: 0,
-      });
-
-      const MoviesList = await this.getMoviesFromOMDB();
-
-      
-      if (MoviesList.length) {
+      if (this.state.searchQuery) {
         this.setState({
-          searchIcon: <i className="fa fa-search"></i>,
+         
+          selectedIndex: 0,
         });
+
+        const Response = await this.getMoviesFromOMDB();
+
+        if (Response.Response === "True") {
+          const MoviesList = Response.Search;
+
+          MoviesList.forEach(function (movie) {
+            movie.nominated = false;
+            movie.label = "Nominate";
+          });
+
+          titlesAreSame(MoviesList, this.state.Nominations);
+          this._disableNominationButtons(MoviesList);
+
+          this.setState({
+            Movies: MoviesList,
+          });
+        } else if (Response.Response === "False") {
+          createNotification('error')
+
+          
+        }
+      } else {
+        createNotification('error')
       }
+    };
 
-      
-      MoviesList.forEach(function (movie) {
-        movie.nominated = false;
-        movie.label = "Nominate";
-      });
+    this.getMoviesFromOMDB = async () => {
+      const response = await fetch(
+        `https://www.omdbapi.com/?s=${this.state.searchQuery}&apikey=281d4422`
+      );
+      const responseJSON = await response.json();
 
-      titlesAreSame(MoviesList, this.state.Nominations);
-      this._disableNominationButtons(MoviesList);
-
-      this.setState({
-        Movies: MoviesList,
-      });
+      return responseJSON;
     };
   }
 
-  getMoviesFromOMDB = async () => {
-    const response = await fetch(
-      `https://www.omdbapi.com/?s=${this.state.searchQuery}&apikey=d2850ca8`
-    );
-    const responseJSON = await response.json();
-    const MoviesList = responseJSON.Search;
-    return MoviesList;
-  };
 
-  //Function to scitch tabs
+  
   handleSelect = (index) => {
     this.setState({ selectedIndex: index });
   };
 
-  //Function to retrieve nominations
   _retrieveNominationsFromStorage = () => {
     const storedNominations = JSON.parse(
       localStorage.getItem("shopify-movie-app")
@@ -89,12 +93,12 @@ class App extends React.Component {
     }
   };
 
-  //Function to save nominations
+  //save nominations
   _saveToLocalStorage = (list) => {
     localStorage.setItem("shopify-movie-app", JSON.stringify(list));
   };
 
-  //Function to switch between main tabs (Movie and Nomination)
+  //switch tabs
   handleTabActiveness = (e) => {
     if (e.target.tabIndex === 1) {
       this.setState({
@@ -109,7 +113,7 @@ class App extends React.Component {
     }
   };
 
-  //Function to add nominations to Nomination list
+  //add nominations to Nomination list
   handleNomination = (e, movie) => {
     const Movies = this.state.Movies;
     Movies.map((movieItem) => {
@@ -145,7 +149,6 @@ class App extends React.Component {
     this._saveToLocalStorage(NominationList);
   };
 
-  //Function to remove nominations from list
   removeNomination = (e, nominated) => {
     const newNominationList = this.state.Nominations;
     let updateMoviesList = this.state.Movies;
@@ -174,7 +177,6 @@ class App extends React.Component {
     });
   };
 
-  //Disable nomination buttons if five nominations already exists in list
   _disableNominationButtons(MoviesList) {
     if (this.state.Nominations.length >= 5) {
       MoviesList.map((movie) => {
@@ -190,24 +192,20 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+       
           <div className="hero">
-            <h1>
-              <i className="fab fa-shopify"></i> The <span>Shopp</span>ies
-            </h1>
-            <p>"Movie awards for entrepreneurs"</p>
-            <div className="ripple-background">
-              <div className="circle xxlarge shade1"></div>
-              <div className="circle xlarge shade2"></div>
-            </div>
+            
+            <Header></Header>
+            
             <Search
               value={this.state.searchQuery}
               onSubmit={(e) => this.handleSearchSubmit(e)}
               onChange={(e) => this.setState({ searchQuery: e.target.value })}
-              searchIcon={this.state.searchIcon}
+              
             ></Search>
           </div>
-        </header>
+      
+        <NotificationContainer/>
 
         <Tabs
           selectedIndex={this.state.selectedIndex}
@@ -229,23 +227,36 @@ class App extends React.Component {
               onSelect={this.handleSelect}
             >
               Nominations
+              
             </Tab>
           </TabList>
           <main className="main-container">
             <TabPanel>
-              <Display
-                Movies={this.state.Movies}
-                onNominate={this.handleNomination}
-              />
+              {this.state.Movies.length ? (
+                <Display
+                  Movies={this.state.Movies}
+                  onNominate={this.handleNomination}
+                />
+              ) : (
+                <p className="empty-movie-list">{this.state.emptyMovieList}</p>
+              )}
             </TabPanel>
             <TabPanel>
-              <Nominations
-                Nominations={this.state.Nominations}
-                removeNomination={this.removeNomination}
-              />
+              {this.state.Nominations.length ? (
+                <Nominations
+                  Nominations={this.state.Nominations}
+                  removeNomination={this.removeNomination}
+                />
+              ) : (
+                <p className="empty-nomination-list">
+                  {this.state.emptyNominationList}
+                </p>
+              )}
             </TabPanel>
           </main>
         </Tabs>
+        
+        
       </div>
     );
   }
@@ -280,6 +291,31 @@ const restoreNominationStatus = (moviesList, nominationList) => {
     }
   }
   return moviesList;
+};
+
+const createNotification = (type) => {
+  return () => {
+    switch (type) {
+      case 'info':
+        NotificationManager.info('Info message');
+        break;
+      case 'success':
+        NotificationManager.success('Success message', 'Title here');
+        break;
+      case 'warning':
+        NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+        break;
+      case 'error':
+        NotificationManager.error('Error message', 'Click me!', 5000, () => {
+          alert('callback');
+        });
+        break;
+      default:
+        alert('callback');
+        break;
+
+    }
+  };
 };
 
 export default App;

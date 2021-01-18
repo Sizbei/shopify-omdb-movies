@@ -11,7 +11,7 @@
   }
   
   .display-item {
-    width: 300px;
+    width: 280px;
     height: 450px;
     margin: 10px;
     display: flex;
@@ -19,8 +19,8 @@
     border-radius: 1px;
     box-shadow: 4px 4px 7px #a19e98, -4px -4px 7px #ffffff;
     position: relative;
-    border: 4px solid #008060;
-    transition: 0.3s all ease-in;
+    
+    transition: 0.4s all ease-in;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
@@ -30,7 +30,7 @@
   }
   
   .display-content-container {
-    text-align: left;
+    
     padding: 1em;
     background-color: #eeeeee;
     display: flex;
@@ -49,7 +49,7 @@
   
   .display-item .title-container {
     text-align: center;
-    height: 20%;
+    height: 25%;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -66,7 +66,7 @@
     font-weight: bold;
   }
   .display-item:hover .display-content-container {
-    opacity: 1;
+    opacity: 2;
   }
   .display-content {
     height: 80%;

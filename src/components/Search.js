@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../styling/Search.css";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class Search extends Component {
   render() {
@@ -13,7 +15,7 @@ export default class Search extends Component {
         placeholder="Enter movie title"
       />
       <button type="submit" className="search-button">
-        {this.props.searchIco}
+      <FontAwesomeIcon icon={faSearch} />
       </button>
        </form>
 

@@ -13,9 +13,11 @@ class Display extends Component {
   }
 
   render() {
-    console.log(this.props.Movies);
     const MovieList = this.props.Movies.map((movie) => {
-      
+        if (movie.Poster === "N/A") {
+            movie.Poster =
+              "https://wikiclipart.com/wp-content/uploads/2016/10/Movie-night-clipart-free-images-4.jpeg";
+          }
       return (
         <DisplayItem
           key={movie.imdbID}

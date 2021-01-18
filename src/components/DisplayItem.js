@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Buttons.js";
+import Buttone from "./Buttons.js";
 
 function DisplayItem({ movie, onNominate }) {
   return (
@@ -12,7 +12,7 @@ function DisplayItem({ movie, onNominate }) {
         <p>({movie.Year})</p>
       </div>
       <div className="display-content-container">
-        <Button
+        <Buttone
           label={movie.label}
           type="submit"
           onClick={(e) => onNominate(e, movie)}
