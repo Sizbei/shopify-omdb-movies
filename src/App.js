@@ -9,6 +9,7 @@ import Nominations from "./components/Nominations";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Alert } from "shards-react";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -128,7 +129,9 @@ class App extends React.Component {
     if (NominationList.length >= 5) {
       createNotification("warning"); 
       
-      this.state.Max= true;
+      this.setState({
+        Max: true,
+      });
       console.log("hi");
 
       const newMovies = this.state.Movies;
@@ -297,6 +300,7 @@ const restoreNominationStatus = (moviesList, nominationList) => {
       ) {
         moviesList[Title].nominated = false;
         moviesList[Title].label = "Nominate";
+        console.log(nomination);
       }
     }
   }
