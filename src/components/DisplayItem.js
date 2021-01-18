@@ -17,7 +17,6 @@ function DisplayItem({ movie, onNominate }) {
           type="submit"
           onClick={(e) => onNominate(e, movie)}
           className="btn nominate"
-          iconClass="far fa-check-circle"
           disabled={movie.nominated}
         />
       </div>

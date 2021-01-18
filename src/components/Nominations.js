@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import Buttone from "./Buttons.js";
+import "../styling/Nominations.css"
 
 class Nominations extends Component {
   render() {
     const NominationList = this.props.Nominations.map((Nomination) => (
-      <div className="nomination-item" key={Nomination.imdbID}>
-        <div className="nomination-item-details">
+    
+      <div className="nominations-item" key={Nomination.imdbID}>
+
+        
+        <div className="nominations-item-details">
       <div>
         <h3 className="">{Nomination.Title}</h3>
         <p>{Nomination.Year}</p>
@@ -21,7 +25,7 @@ class Nominations extends Component {
     </div>
       </div>
     ));
-    return <div className={`nomination-container`}>{NominationList}</div>;
+    return <div className={`nominations-container`}>{NominationList}</div>;
   }
 }
 

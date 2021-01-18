@@ -36,11 +36,11 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <Navbar type="dark" theme="primary" expand="md">
+      <Navbar type="dark" theme="dark theme" expand="md">
         <div className= "header-centre">
         
-        
-        <NavbarBrand href="#">Shoppies</NavbarBrand>
+        <img src={"../resources/cutebear.gif"}></img>
+        <NavbarBrand href="#">SHOPPIES</NavbarBrand>
         
         <NavbarToggler onClick={this.toggleNavbar} />
         

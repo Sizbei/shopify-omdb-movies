@@ -1,0 +1,52 @@
+.nominations-container {
+    margin: 0 auto;
+    margin-top: 50px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+    
+  }
+  
+  .nominations-item {
+    width: 280px;
+    margin: 10px;
+  }
+  
+  .nominations-item .title {
+    font-size: 1.1rem;
+  }
+  
+  .nominations-item p {
+    font-size: 0.9rem;
+  }
+  
+  @media screen and (max-width: 400px) {
+    .nominations-item {
+        height: 100vw;
+      width: 80vw;
+      margin-bottom: 10px;
+    }
+  }
+  .nominations-item-details {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.9em;
+    border-radius: 11px;
+    background: white;
+    box-shadow: 0 8px 6px -6px green;
+   
+    color: #3f3d56;
+    font-weight: bold;
+  }
+  
+  .nominations-item-details p {
+    margin-top: 10px;
+  }

@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Modal, ModalBody, ModalHeader } from "shards-react";
+import { Modal, ModalBody, ModalHeader } from "shards-react";
 
 export default class BasicModalExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
-    this.toggle = this.toggle.bind(this);
+    this.state = { open: true };
+    this.toggle = this.toggle.bind(true);
   }
 
   toggle() {
@@ -20,7 +20,7 @@ export default class BasicModalExample extends React.Component {
         
       <div>
         
-        <Button onClick={this.toggle}>Click Me!</Button>
+        
         <Modal size="lg" centered="true" animation="true" open={open} toggle={this.toggle}>
           <ModalHeader><div >You've reached the max number of nominations</div></ModalHeader>
           <ModalBody> yeah </ModalBody>

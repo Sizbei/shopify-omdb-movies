@@ -1,5 +1,5 @@
 import Header from './components/Header.js';
-import Modal from './components/Modal.js';
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -10,6 +10,7 @@ import Display from "./components/Display";
 import Search from "./components/Search";
 import Nominations from "./components/Nominations";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { Modal, ModalBody, ModalHeader } from "shards-react";
 
 class App extends React.Component {
   constructor(props) {
@@ -127,9 +128,17 @@ class App extends React.Component {
     //Disable nomination buttons after five nominations
     const NominationList = [...this.state.Nominations, movie];
     if (NominationList.length >= 5) {
+      createNotification("warning"); 
+      this.toggle = true;
+      <Modal size="lg" centered="true" animation="true"  toggle={this.toggle}>
+      <ModalHeader><div >You've reached the max number of nominations</div></ModalHeader>
+      <ModalBody> yeah </ModalBody>
+    </Modal>
+      console.log("hi");
       const newMovies = this.state.Movies;
       newMovies.map((movie) => {
         movie.nominated = true;
+        
         if (movie.label === "Nominate") {
           movie.label = "Can't Nominate";
         }
@@ -195,7 +204,7 @@ class App extends React.Component {
        
           <div className="hero">
             
-            <Header></Header>
+            <Header theme={"dark"}></Header>
             
             <Search
               value={this.state.searchQuery}
