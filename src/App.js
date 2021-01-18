@@ -1,8 +1,5 @@
 import Header from './components/Header.js';
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import React from "react";
 import { Tabs, TabList, TabPanel, Tab } from "react-tabs";
 import "./App.css";
@@ -10,7 +7,7 @@ import Display from "./components/Display";
 import Search from "./components/Search";
 import Nominations from "./components/Nominations";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import { Modal, ModalBody, ModalHeader } from "shards-react";
+import { Alert } from "shards-react";
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +19,7 @@ class App extends React.Component {
       searchQuery: "",
       Movies: [],
       Nominations: [],
+      Max: false,
      
     };
     this.tabIndex = React.createRef();
@@ -129,12 +127,10 @@ class App extends React.Component {
     const NominationList = [...this.state.Nominations, movie];
     if (NominationList.length >= 5) {
       createNotification("warning"); 
-      this.toggle = true;
-      <Modal size="lg" centered="true" animation="true"  toggle={this.toggle}>
-      <ModalHeader><div >You've reached the max number of nominations</div></ModalHeader>
-      <ModalBody> yeah </ModalBody>
-    </Modal>
+      
+      this.state.Max= true;
       console.log("hi");
+
       const newMovies = this.state.Movies;
       newMovies.map((movie) => {
         movie.nominated = true;
@@ -174,6 +170,7 @@ class App extends React.Component {
       return movieItem;
     });
 
+    
     updateMoviesList = restoreNominationStatus(
       updateMoviesList,
       newNominations
@@ -183,6 +180,7 @@ class App extends React.Component {
     this.setState({
       Nominations: newNominations,
       Movies: updateMoviesList,
+      Max: false,
     });
   };
 
@@ -202,9 +200,12 @@ class App extends React.Component {
     return (
       <div className="App">
        
-          <div className="hero">
+          <div className="body">
             
             <Header theme={"dark"}></Header>
+            <Alert className="mb-3" open={this.state.Max} theme="warning">
+         Alert {"max number of nominations reached"}
+       </Alert>
             
             <Search
               value={this.state.searchQuery}

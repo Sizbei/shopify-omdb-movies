@@ -39,8 +39,8 @@ export default class Header extends React.Component {
       <Navbar type="dark" theme="dark theme" expand="md">
         <div className= "header-centre">
         
-        <img src={"../resources/cutebear.gif"}></img>
-        <NavbarBrand href="#">SHOPPIES</NavbarBrand>
+        
+        <NavbarBrand >SHOPPIES</NavbarBrand>
         
         <NavbarToggler onClick={this.toggleNavbar} />
         
@@ -49,7 +49,7 @@ export default class Header extends React.Component {
           
           <Nav navbar>
             <NavItem>
-            <NavLink active href="#">
+            <NavLink >
             Movie Awards For Entrepreneurs
               </NavLink>
               

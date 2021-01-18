@@ -13,6 +13,7 @@
   .nominations-item {
     width: 280px;
     margin: 10px;
+    height: 300px;
   }
   
   .nominations-item .title {
@@ -45,6 +46,7 @@
    
     color: #3f3d56;
     font-weight: bold;
+    height: 300px;
   }
   
   .nominations-item-details p {

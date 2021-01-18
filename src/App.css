@@ -2,11 +2,15 @@
   
   background: url("https://i.pinimg.com/originals/50/5c/86/505c86078071cfa05794264907521db9.jpg");
   background-size: 1000%;
-  
-  
 }
 
 
+html {
+  width: 100%;
+  height: 100%;
+  background: black url('https://i.pinimg.com/originals/50/5c/86/505c86078071cfa05794264907521db9.jpg') repeat center;
+  background-size:contain;
+ }
 
 .App-logo {
   height: 40vmin;
